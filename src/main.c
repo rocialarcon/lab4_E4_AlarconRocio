@@ -37,6 +37,7 @@ SPDX-License-Identifier: MIT
 
 #include "board.h"
 #include "chip.h"
+#include "digital.h"
 #include <stdio.h>
 
 /* === Macros definitions ====================================================================== */
@@ -155,7 +156,8 @@ static void TestLed(void);
 static void Delay(void);
 
 /* === Public variable definitions ============================================================= */
-
+digital_output_t led_verde;
+digital_output_t led_amarillo;
 /* === Private variable definitions ============================================================ */
 
 /* === Private function implementation ========================================================= */
@@ -179,12 +181,14 @@ static void ConfigureLeds(void) {
     Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, LED_1_GPIO, LED_1_BIT, true);
 
     Chip_SCU_PinMuxSet(LED_2_PORT, LED_2_PIN, SCU_MODE_INBUFF_EN | SCU_MODE_INACT | LED_2_FUNC);
-    Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_2_GPIO, LED_2_BIT, false);
-    Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, LED_2_GPIO, LED_2_BIT, true);
+    led_amarillo = DigitalOutputCreate(LED_2_GPIO, LED_2_BIT);
+    //Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_2_GPIO, LED_2_BIT, false);
+    //Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, LED_2_GPIO, LED_2_BIT, true);
 
     Chip_SCU_PinMuxSet(LED_3_PORT, LED_3_PIN, SCU_MODE_INBUFF_EN | SCU_MODE_INACT | LED_3_FUNC);
-    Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_3_GPIO, LED_3_BIT, false);
-    Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, LED_3_GPIO, LED_3_BIT, true);
+    led_verde = DigitalOutputCreate(LED_3_GPIO, LED_3_BIT);
+    //Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_3_GPIO, LED_3_BIT, false);
+    //Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, LED_3_GPIO, LED_3_BIT, true);
 }
 
 static void ConfigureKeys(void) {
@@ -204,6 +208,7 @@ static void ConfigureKeys(void) {
 static void FlashLed(void) {
     static int divisor = 0;
     static rgb_color_t state = LED_BLUE_OFF;
+    
 
     divisor++;
     if (divisor == 5) {
@@ -244,16 +249,19 @@ static void ToggleLed(void) {
 
     current_state = (Chip_GPIO_ReadPortBit(LPC_GPIO_PORT, TEC_3_GPIO, TEC_3_BIT) == 0);
     if ((current_state) && (!last_state)) {
-        Chip_GPIO_SetPinToggle(LPC_GPIO_PORT, LED_2_GPIO, LED_2_BIT);
+        //Chip_GPIO_SetPinToggle(LPC_GPIO_PORT, LED_2_GPIO, LED_2_BIT);
+        DigitalOutputToggle(led_amarillo);
     }
     last_state = current_state;
 }
 
 static void TestLed(void) {
     if (Chip_GPIO_ReadPortBit(LPC_GPIO_PORT, TEC_4_GPIO, TEC_4_BIT) == 0) {
-        Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_3_GPIO, LED_3_BIT, true);
+       // Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_3_GPIO, LED_3_BIT, true);
+        DigitalOutputActivate(led_verde);
     } else {
-        Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_3_GPIO, LED_3_BIT, false);
+       // Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_3_GPIO, LED_3_BIT, false);
+        DigitalOutputDesactivate(led_verde);
     }
 }
 
