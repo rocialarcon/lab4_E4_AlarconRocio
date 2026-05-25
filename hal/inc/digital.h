@@ -36,6 +36,8 @@ SPDX-License-Identifier: MIT
 /* === Headers files inclusions ==================================================================================== */
 
 #include <stdint.h>
+#include <stdbool.h>
+
 /* === Header for C++ compatibility ================================================================================ */
 
 #ifdef __cplusplus
@@ -46,20 +48,77 @@ extern "C" {
 
 /* === Public data type declarations =============================================================================== */
 
-
+/** 
+ * @brief Puntero a la estructura que representa una salida digital. 
+ */
 typedef struct digital_output_s * digital_output_t; 
+
+/**
+ * @brief Puntero a la estructura que representa a una entrda digital.
+ */
+typedef struct digital_input_s * digital_input_t;
+
 /* === Public variable declarations ================================================================================ */
 
 /* === Public function declarations ================================================================================ */
 
+/** 
+ * @brief Crea e inicializa una instancia de una salida digital.
+ * @param puerto Numero de puerto GPIO del microcontrolador.
+ * @param terminal Numero de pin/bit dentro del puerto GPIO.
+ * @return Instancia de la salida digital creada o NULL en caso de error.
+ */
 digital_output_t DigitalOutputCreate(uint32_t puerto, uint8_t terminal);
 
+/**
+ * @brief Activa (pone en '1' logico) la salida digital especificada.
+ * @param salida Instancia de la salida digital.
+ */
 void DigitalOutputActivate(digital_output_t salida);
 
+/**
+ * @brief Desactiva (pone en '0' logico) la salida digital especificada.
+ */
 void DigitalOutputDesactivate(digital_output_t salida);
 
+/**
+ * @brief Invierte o conmuta el estado actual de la salida digital especififcada.
+ */
 void DigitalOutputToggle(digital_output_t salida);
 
+/**
+ * @brief Crea e inicializa una instancia de una entrada digital.
+ * @param puerto Numero de puerto GPIO del microcontrolador.
+ * @param terminal Numero de pin/bit dentro del puerto GPIO.
+ * @param invertido Instancia si la entrada posee logica invertida (true para pull-up, false para pull-down).
+ * @return Instancia de la entrada digital creada o NULL en caso de error.
+ */
+digital_input_t DigitalInputCreate(uint32_t puerto, uint8_t terminal, bool invertido);
+
+/**
+ * @brief Devuelve el estado logico actual de la entrada digital.
+ * @param entrada Instancia de la entrada digital.
+ * @return true si la entrada esta activa logicamente, false si esta inactiva.
+ */
+bool DigitalInputGetState(digital_input_t entrada);
+
+/**
+ * @brief Determina si la entrada digital cambio de estado desde la ultima consulta.
+ * @return true si hubo algun cambio de estado, false en caso contrario.
+ */
+int DigitalInputHasChanged(digital_input_t entrada);
+
+/**
+ * @brief Detecta si ocurrio un flanco de activacion (transicion de inactivo a activo) en la entrada.
+ * @return true unicamente en el ciclo donde se detecta la transicion positiva.
+ */
+bool DigitalInputHasActivate(digital_input_t entrada);
+
+/**
+ * @brief Detecta si ocurrio un flanco de dessactivacion (transicion de activo a inactivo) en la entrada.
+ * @return true unicamente en el ciclo donde se detecta la transicion de bajada.
+ */
+bool DigitalInputHasDesactivate(digital_input_t entrada);
 
 /* === End of conditional blocks =================================================================================== */
 
