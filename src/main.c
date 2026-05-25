@@ -174,51 +174,35 @@ digital_input_t tecla_4;
 static void ConfigureLeds(void) {
     Chip_SCU_PinMuxSet(LED_R_PORT, LED_R_PIN, SCU_MODE_INBUFF_EN | SCU_MODE_INACT | LED_R_FUNC);
     rgb_rojo = DigitalOutputCreate(LED_R_GPIO, LED_R_BIT);
-    //Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_R_GPIO, LED_R_BIT, false);
-    //Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, LED_R_GPIO, LED_R_BIT, true);
 
     Chip_SCU_PinMuxSet(LED_G_PORT, LED_G_PIN, SCU_MODE_INBUFF_EN | SCU_MODE_INACT | LED_G_FUNC);
     rgb_verde = DigitalOutputCreate(LED_G_GPIO, LED_G_BIT);
-    //Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_G_GPIO, LED_G_BIT, false);
-    //Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, LED_G_GPIO, LED_G_BIT, true);
 
     Chip_SCU_PinMuxSet(LED_B_PORT, LED_B_PIN, SCU_MODE_INBUFF_EN | SCU_MODE_INACT | LED_B_FUNC);
     rgb_azul = DigitalOutputCreate(LED_B_GPIO, LED_B_BIT);
-    //Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_B_GPIO, LED_B_BIT, false);
-    //Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, LED_B_GPIO, LED_B_BIT, true);
 
     /******************/
     Chip_SCU_PinMuxSet(LED_1_PORT, LED_1_PIN, SCU_MODE_INBUFF_EN | SCU_MODE_INACT | LED_1_FUNC);
     led_rojo = DigitalOutputCreate(LED_1_GPIO, LED_1_BIT);
-    //Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_1_GPIO, LED_1_BIT, false);
-    //Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, LED_1_GPIO, LED_1_BIT, true);
 
     Chip_SCU_PinMuxSet(LED_2_PORT, LED_2_PIN, SCU_MODE_INBUFF_EN | SCU_MODE_INACT | LED_2_FUNC);
     led_amarillo = DigitalOutputCreate(LED_2_GPIO, LED_2_BIT);
-    //Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_2_GPIO, LED_2_BIT, false);
-    //Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, LED_2_GPIO, LED_2_BIT, true);
 
     Chip_SCU_PinMuxSet(LED_3_PORT, LED_3_PIN, SCU_MODE_INBUFF_EN | SCU_MODE_INACT | LED_3_FUNC);
     led_verde = DigitalOutputCreate(LED_3_GPIO, LED_3_BIT);
-    //Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_3_GPIO, LED_3_BIT, false);
-    //Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, LED_3_GPIO, LED_3_BIT, true);
 }
 
 static void ConfigureKeys(void) {
     Chip_SCU_PinMuxSet(TEC_1_PORT, TEC_1_PIN, SCU_MODE_INBUFF_EN | SCU_MODE_PULLUP | TEC_1_FUNC);
-    //Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, TEC_1_GPIO, TEC_1_BIT, false);
     tecla_1 = DigitalInputCreate(TEC_1_GPIO, TEC_1_BIT, true);
 
     Chip_SCU_PinMuxSet(TEC_2_PORT, TEC_2_PIN, SCU_MODE_INBUFF_EN | SCU_MODE_PULLUP | TEC_2_FUNC);
-    //Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, TEC_2_GPIO, TEC_2_BIT, false);
     tecla_2 = DigitalInputCreate(TEC_2_GPIO, TEC_2_BIT, true);
     
     Chip_SCU_PinMuxSet(TEC_3_PORT, TEC_3_PIN, SCU_MODE_INBUFF_EN | SCU_MODE_PULLUP | TEC_3_FUNC);
-    //Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, TEC_3_GPIO, TEC_3_BIT, false);
     tecla_3 = DigitalInputCreate(TEC_3_GPIO, TEC_3_BIT, true);
 
     Chip_SCU_PinMuxSet(TEC_4_PORT, TEC_4_PIN, SCU_MODE_INBUFF_EN | SCU_MODE_PULLUP | TEC_4_FUNC);
-    //Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, TEC_4_GPIO, TEC_4_BIT, false);
     tecla_4 = DigitalInputCreate(TEC_4_GPIO, TEC_4_BIT, true);
 }   
 
@@ -236,23 +220,17 @@ static void FlashLed(void) {
         switch (state) {
         case LED_RED_ON:
             DigitalOutputActivate(rgb_rojo);
-            //Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_R_GPIO, LED_R_BIT, true);
             break;
         case LED_GREEN_ON:
             DigitalOutputActivate(rgb_verde);
-            //Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_G_GPIO, LED_G_BIT, true);
             break;
         case LED_BLUE_ON:
             DigitalOutputActivate(rgb_azul);
-            //Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_B_GPIO, LED_B_BIT, true);
             break;
         default:
             DigitalOutputDesactivate(rgb_rojo);
             DigitalOutputDesactivate(rgb_verde);
             DigitalOutputDesactivate(rgb_azul);
-            //Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_R_GPIO, LED_R_BIT, false);
-            //Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_G_GPIO, LED_G_BIT, false);
-            //Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_B_GPIO, LED_B_BIT, false);
             break;
         }
     }
@@ -261,32 +239,22 @@ static void FlashLed(void) {
 static void SwitchLed(void) {
     if (DigitalInputGetState(tecla_1)) {
         DigitalOutputActivate(led_rojo);
-        //Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_1_GPIO, LED_1_BIT, true);
     }
     if (DigitalInputGetState(tecla_2)) {
         DigitalOutputDesactivate(led_rojo);
-        //Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_1_GPIO, LED_1_BIT, false);
     }
 }
 
 static void ToggleLed(void) {
-    //static bool last_state = false;
-    //bool current_state;
-
-    //current_state = (Chip_GPIO_ReadPortBit(LPC_GPIO_PORT, TEC_3_GPIO, TEC_3_BIT) == 0);
     if (DigitalInputHasActivate(tecla_3)) {
-        //Chip_GPIO_SetPinToggle(LPC_GPIO_PORT, LED_2_GPIO, LED_2_BIT);
         DigitalOutputToggle(led_amarillo);
     }
-    //last_state = current_state;
 }
 
 static void TestLed(void) {
     if (DigitalInputGetState(tecla_4)){
-       // Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_3_GPIO, LED_3_BIT, true);
         DigitalOutputActivate(led_verde);
     } else {
-       // Chip_GPIO_SetPinState(LPC_GPIO_PORT, LED_3_GPIO, LED_3_BIT, false);
         DigitalOutputDesactivate(led_verde);
     }
 }
