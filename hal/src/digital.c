@@ -4,7 +4,7 @@ Facultad de Ciencias Exactas y Tecnología
 Universidad Nacional de Tucuman
 http://www.microprocesadores.unt.edu.ar/
 
-Copyright 2016-2025, Esteban Volentini <evolentini@herrera.unt.edu.ar>
+Copyright 2026, Alarcon Fajardo Rocio Belen <rocialarcon555@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -27,7 +27,8 @@ SPDX-License-Identifier: MIT
 *************************************************************************************************/
 
 /** @file digital.c
- ** @brief Declaraciones de la biblioteca para gestion de netradas y salidas digitales
+ ** @brief Declaraciones de la biblioteca para gestion de entradas y salidas digitales.
+ ** @author Alarcon Rocio.
  **/
 
 
@@ -42,11 +43,19 @@ SPDX-License-Identifier: MIT
 #define DEACTIVATE_EVENT -1
 /* === Private data type declarations ========================================================== */
 
+/**
+ * @brief Estructura interna para manejar las salidas digitales.
+ * Contiene el puerto y el terminal fisico asociado al microcontrolador.
+ */
 struct digital_output_s {
     uint32_t puerto;
     uint8_t terminal;
 };
 
+/**
+ * @brief Estructura interna para manejar las entradas digitales.
+ * Almacena la configuracion de hardware y el estado previo para detectar flancos.
+ */
 struct digital_input_s {
     uint32_t puerto;
     uint8_t terminal;

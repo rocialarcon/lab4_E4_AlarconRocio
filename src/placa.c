@@ -4,7 +4,7 @@ Facultad de Ciencias Exactas y Tecnología
 Universidad Nacional de Tucuman
 http://www.microprocesadores.unt.edu.ar/
 
-Copyright 2016-2025, Esteban Volentini <evolentini@herrera.unt.edu.ar>
+Copyright 2016-2025, Alarcon Fajardo Rocio Belen <rocialarcon555@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -28,6 +28,7 @@ SPDX-License-Identifier: MIT
 
 /** @file placa.c
  ** @brief Estructura que contiene los perifericos.
+ ** @author Alarcon Rocio.
  **/
 
 /* === Headers files inclusions ================================================================ */
@@ -103,7 +104,8 @@ SPDX-License-Identifier: MIT
 /* === Private function declarations =========================================================== */
 
 /**
- * @brief Configura y crea los objetos de las salidas digitales
+ * @brief Configura y crea los objetos de las salidas digitales.
+ * @param self puntero a la estructura board_s donde se guardaran los objetos creados.
  */
 static void ConfigureLeds(struct board_s * self);
 

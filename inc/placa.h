@@ -4,7 +4,7 @@ Facultad de Ciencias Exactas y Tecnologia
 Universidad Nacional de Tucuman
 http://www.microprocesadores.unt.edu.ar/
 
-Copyright 2016-2025, Esteban Volentini <evolentini@herrera.unt.edu.ar>
+Copyright 2026, Alarcon Fajardo Rocio Belen <rocialarcon555@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -31,6 +31,7 @@ SPDX-License-Identifier: MIT
 
 /** @file placa.h
  ** @brief Estructura que contiene los perifericos.
+ ** @author Alarcon Rocio.
  **/
 
 /* === Headers files inclusions ==================================================================================== */
@@ -46,6 +47,11 @@ extern "C" {
 
 /* === Public data type declarations =============================================================================== */
 
+/**
+ * @brief Estructura que agrupa todos los perifericos de la placa.
+ * Contiene los punteros a los objetos de hardware (entrdas y salidas)
+ * que componen la placa, facilitando su acceso centralizado.
+ */
 typedef struct board_s {
     digital_output_t led_verde;
     digital_output_t led_amarillo;
@@ -63,7 +69,12 @@ typedef struct board_s {
 /* === Public variable declarations ================================================================================ */
 
 /* === Public function declarations ================================================================================ */
-
+/**
+ * @brief Configura el hardware inicial y crea los objetos de los perifericos.
+ * *Esta funcion inicializa los puertos de la EDU-CIAA, configura los multiplexores}
+ * de pines y asigna la memoria necesaria  para controlar cada LED y tecla.
+ * *@return board_t Puntero a la estructura que contiene los perifericos de la placa.
+ */
 board_t BoardCreate(void);
 /* === End of conditional blocks =================================================================================== */
 
