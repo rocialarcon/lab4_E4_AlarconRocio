@@ -35,6 +35,7 @@ SPDX-License-Identifier: MIT
 #include "screen.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 /* === Macros definitions ====================================================================== */
 
@@ -55,6 +56,7 @@ struct display_s {
     uint16_t flashing_frecuency;
     uint16_t flashing_count;
     uint8_t display_memory[DISPLAY_MAX_DIGITS];
+    bool dots[DISPLAY_MAX_DIGITS];
     struct display_driver_s driver[1];
 };
 /* === Private function declarations =========================================================== */
@@ -100,7 +102,7 @@ display_t DisplayCreate(uint8_t digits, display_driver_t driver) {
         display->flashing_count = 0;
 
         memset(display->display_memory, 0, sizeof(display->display_memory));
-
+        memset(display->dots, false, sizeof(display->dots));
         memcpy(display->driver, driver, sizeof(struct display_driver_s));
 
         display->driver->UpdateSegments(0);
@@ -126,6 +128,12 @@ void DisplayRefresh(display_t display) {
     display->driver->UpdateDigits(1 << display->active_digit);
     
     uint8_t segmentos = display->display_memory[display->active_digit];
+
+    if (display->dots[display->active_digit])
+    {
+        segmentos |= SEGMENT_P;
+    }
+    
 
     if (display->flashing_frecuency > 0)
     {
@@ -158,6 +166,8 @@ void DisplayFlashDigits(display_t display, uint8_t from, uint8_t to, uint16_t fr
 }
 
 void DisplayToggleDots(display_t display, uint8_t from, uint8_t to) {
-
+    for( uint8_t i = from; i <= to && i < display->digits; i++) {
+        display->dots[i] = !display->dots[i];
+    }
 }
 /* === End of documentation ==================================================================== */
