@@ -26,10 +26,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 SPDX-License-Identifier: MIT
 *************************************************************************************************/
 
-#ifndef PLACA_H_
-#define PLACA_H_
+#ifndef BSP_H_
+#define BSP_H_
 
-/** @file placa.h
+/** @file bsp.h
  ** @brief Estructura que contiene los perifericos.
  ** @author Alarcon Rocio.
  **/
@@ -37,6 +37,7 @@ SPDX-License-Identifier: MIT
 /* === Headers files inclusions ==================================================================================== */
 
 #include "digital.h"
+#include "screen.h"
 /* === Header for C++ compatibility ================================================================================ */
 
 #ifdef __cplusplus
@@ -53,17 +54,17 @@ extern "C" {
  * que componen la placa, facilitando su acceso centralizado.
  */
 typedef struct board_s {
-    digital_output_t led_verde;
-    digital_output_t led_amarillo;
-    digital_output_t led_rojo;
-    digital_output_t rgb_rojo;
-    digital_output_t rgb_verde;
-    digital_output_t rgb_azul;
+    digital_output_t buzzer;
 
-    digital_input_t tecla_1;
-    digital_input_t tecla_2;
-    digital_input_t tecla_3;
-    digital_input_t tecla_4;
+    digital_input_t f1;
+    digital_input_t f2;
+    digital_input_t f3;
+    digital_input_t f4;
+    digital_input_t aceptar;
+    digital_input_t cancelar;
+
+    display_t display;
+
 } const * board_t;
 
 /* === Public variable declarations ================================================================================ */
@@ -82,4 +83,4 @@ board_t BoardCreate(void);
 }
 #endif
 
-#endif /* PLACA_H_ */
+#endif /* BSP_H_ */
